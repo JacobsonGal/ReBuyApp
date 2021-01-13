@@ -1,12 +1,10 @@
 package com.aviv.rebuy.ui.login;
-
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
-
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,10 +39,10 @@ public class LoginFragment extends Fragment {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = view.findViewById(R.id.username);
-        final EditText passwordEditText = view.findViewById(R.id.password);
-        final Button loginButton = view.findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = view.findViewById(R.id.loading);
+        final EditText usernameEditText = view.findViewById(R.id.inputEmail);
+        final EditText passwordEditText = view.findViewById(R.id.inputPassword);
+        final Button loginButton = view.findViewById(R.id.btnLogin);
+
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -68,7 +66,7 @@ public class LoginFragment extends Fragment {
                 if (loginResult == null) {
                     return;
                 }
-                loadingProgressBar.setVisibility(View.GONE);
+
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
                 }
@@ -112,7 +110,7 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
+
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
