@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +38,7 @@ public class LoginFragment extends Fragment {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = view.findViewById(R.id.inputEmail);
+        final EditText usernameEditText = view.findViewById(R.id.inputSearch);
         final EditText passwordEditText = view.findViewById(R.id.inputPassword);
         final Button loginButton = view.findViewById(R.id.btnLogin);
 
