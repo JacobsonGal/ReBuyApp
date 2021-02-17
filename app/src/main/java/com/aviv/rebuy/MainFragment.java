@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class MainFragment extends Fragment {
@@ -32,7 +33,13 @@ public class MainFragment extends Fragment {
 //               Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_mapsFragment);
 //           }
 //       });
-
+        TextView loginText=view.findViewById(R.id.main_login_text);
+        loginText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_login);
+            }
+        });
 
         return view;
     }
