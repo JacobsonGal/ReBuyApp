@@ -1,9 +1,9 @@
 
-plugins {
-    id 'com.android.application'
-    id "androidx.navigation.safeargs"
-    id'com.google.gms.google-services'
-}
+
+    apply plugin: 'com.android.application'
+    apply plugin: "androidx.navigation.safeargs"
+    apply plugin:'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion 30
