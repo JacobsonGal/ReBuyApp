@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class MainFragment extends Fragment {
+public class  MainFragment extends Fragment {
 
 
     public MainFragment() {
