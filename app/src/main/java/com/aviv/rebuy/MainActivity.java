@@ -12,8 +12,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ModelFirebase fr=new ModelFirebase();
-        fr.addUser();
+      //  ModelFirebase fr=new ModelFirebase();
+      //  fr.addUser();
 
     }
 }
