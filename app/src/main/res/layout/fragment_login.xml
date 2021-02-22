@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view4" />
 
     <EditText
-        android:id="@+id/inputPassword"
+        android:id="@+id/reg_inputPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -88,7 +88,7 @@
 
     <Button
         app:backgroundTint="@color/colorPrimary"
-        android:id="@+id/btnLogin"
+        android:id="@+id/regFrag_reg_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -101,10 +101,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/reg_inputPassword" />
 
     <TextView
-        android:id="@+id/forgotPassword"
+        android:id="@+id/loginFrag_forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -116,7 +116,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/regFrag_reg_btn" />
 
     <TextView
         android:id="@+id/textView5"
@@ -126,7 +126,7 @@
         android:text="OR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/loginFrag_forgotPassword" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -169,5 +169,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <ProgressBar
+        android:id="@+id/loginFrag_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="79dp"
+        android:layout_height="109dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="@+id/view4"
+        tools:layout_editor_absoluteX="150dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

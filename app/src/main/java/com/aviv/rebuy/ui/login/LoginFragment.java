@@ -1,30 +1,35 @@
 package com.aviv.rebuy.ui.login;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aviv.rebuy.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginFragment extends Fragment {
-
-    private LoginViewModel loginViewModel;
+    FirebaseAuth fauth=FirebaseAuth.getInstance();
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    ProgressBar pb;
+    TextView forgotPassword;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -32,111 +37,96 @@ public class LoginFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_login, container, false);
         TextView register=view.findViewById(R.id.loginfrag_register);
+        final EditText usernameEditText = view.findViewById(R.id.inputSearch);
+        final EditText passwordEditText = view.findViewById(R.id.reg_inputPassword);
+        final Button loginButton = view.findViewById(R.id.regFrag_reg_btn);
+        forgotPassword=view.findViewById(R.id.loginFrag_forgotPassword);
+      register.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerUserFragment));
+      //login user
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email=usernameEditText.getText().toString().trim();
+                String password=passwordEditText.getText().toString().trim();
+                if(TextUtils.isEmpty(email) && email.matches(emailPattern))
+                {
+                    usernameEditText.setError("please enter  correct   email");
+                    return;
+                }
+                if(TextUtils.isEmpty(password))
+                {
+                    passwordEditText.setError("please enter correct  password");
+                    return;
+                }
 
-        register.setOnClickListener(
-                Navigation.createNavigateOnClickListener( R.id.action_loginFragment_to_registerUserFragment));
+                pb=view.findViewById(R.id.loginFrag_progressBar);
+                pb.setVisibility(View.VISIBLE);
+                //authenticate the user
+                fauth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful())
+                        {
+                            Toast.makeText(getContext(),"Logged in Successfully",Toast.LENGTH_LONG).show();
+                            Navigation.findNavController(view).navigate(R.id.action_global_feedFragment);
+                        }
+                        else
+                        {
+                            Toast.makeText(getContext(),"Error! "+ task.getException().getMessage() ,Toast.LENGTH_LONG).show();
+                            pb.setVisibility(View.INVISIBLE);
+
+                        }
+                    }
+                });
+            }
+        });
+
+//reset password
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText resetMail=new EditText(v.getContext());
+                AlertDialog.Builder passwordRestDialog=new AlertDialog.Builder(v.getContext());
+                passwordRestDialog.setTitle("Reset password ?");
+                passwordRestDialog.setMessage("Enter Your Email To Received Rest Link");
+                passwordRestDialog.setView(resetMail);
+
+                passwordRestDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                //extract the email and sent reset link
+                        String mail=resetMail.getText().toString();
+                        fauth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(getContext(),"Reset Link Sent To Your Email",Toast.LENGTH_LONG).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(),"Error ! Reset Link did not Sent !"+e.getMessage(),Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
+                    }
+                } );
+
+                passwordRestDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //close the dialog
+                    }
+                });
+            passwordRestDialog.create().show();
+            }
+        });
+
+
+
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
 
-        final EditText usernameEditText = view.findViewById(R.id.inputSearch);
-        final EditText passwordEditText = view.findViewById(R.id.inputPassword);
-        final Button loginButton = view.findViewById(R.id.btnLogin);
-
-
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
-            }
-        });
-
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-            @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                }
-            }
-        });
-
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        });
-    }
-
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(getContext().getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void showLoginFailed(@StringRes Integer errorString) {
-        if (getContext() != null && getContext().getApplicationContext() != null) {
-            Toast.makeText(
-                    getContext().getApplicationContext(),
-                    errorString,
-                    Toast.LENGTH_LONG).show();
-        }
-    }
 }

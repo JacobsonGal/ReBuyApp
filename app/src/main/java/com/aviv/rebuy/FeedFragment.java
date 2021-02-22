@@ -3,14 +3,17 @@ package com.aviv.rebuy;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.aviv.rebuy.data.model.ListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,8 +21,8 @@ import com.aviv.rebuy.data.model.ListAdapter;
  * create an instance of this fragment.
  */
 public class FeedFragment extends Fragment {
-
-
+ImageView logout;
+    private FirebaseAuth fAuth;
     public FeedFragment() {
         // Required empty public constructor
     }
@@ -33,6 +36,22 @@ public class FeedFragment extends Fragment {
         recyclerView.setAdapter((listAdapter));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
+       // logout user
+
+        logout=view.findViewById(R.id.feedFrag_logout);
+        fAuth=FirebaseAuth.getInstance();
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            //return to main fragment
+            public void onClick(View v) {
+                fAuth .signOut();
+                Navigation.findNavController(v).navigate(R.id.action_global_mainFragment);
+            }
+        });
+
+
 
         return view;
     }
