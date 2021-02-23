@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.aviv.rebuy.data.model.ListAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -51,7 +52,8 @@ ImageView logout;
             }
         });
 
-
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
+        navBar.setVisibility(View.VISIBLE);
 
         return view;
     }

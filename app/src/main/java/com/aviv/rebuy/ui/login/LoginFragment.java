@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -41,7 +42,16 @@ public class LoginFragment extends Fragment {
         final EditText passwordEditText = view.findViewById(R.id.reg_inputPassword);
         final Button loginButton = view.findViewById(R.id.regFrag_reg_btn);
         forgotPassword=view.findViewById(R.id.loginFrag_forgotPassword);
-      register.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerUserFragment));
+      register.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerUserFragment);
+          }
+      });
+
+       ;
+
+
       //login user
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

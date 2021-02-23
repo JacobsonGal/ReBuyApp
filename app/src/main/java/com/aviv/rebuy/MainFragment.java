@@ -5,15 +5,19 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 public class  MainFragment extends Fragment {
-
+    BottomNavigationView bottom;
 
     public MainFragment() {
         // Required empty public constructor
@@ -26,13 +30,7 @@ public class  MainFragment extends Fragment {
         // Inflate the layout for this fragment
          View view= inflater.inflate(R.layout.fragment_main, container, false);
 
-//       Button map=view.findViewById(R.id.nav_bar_maps_btn);
-//       map.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View v) {
-//               Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_mapsFragment);
-//           }
-//       });
+
         TextView loginText=view.findViewById(R.id.main_login_text);
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override

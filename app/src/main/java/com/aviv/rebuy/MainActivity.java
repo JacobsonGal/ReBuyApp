@@ -13,6 +13,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View view=getCurrentFocus();
          navController = Navigation.findNavController(this , R.id.fragment);
 
         bottomNavigationView =
                 findViewById(R.id.bottom_navigation);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-
-
-
+        bottomNavigationView.setVisibility(View.INVISIBLE);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -45,5 +46,8 @@ public class MainActivity extends AppCompatActivity {
             return NavigationUI.onNavDestinationSelected(item,navController);
         }
 
+    }
+
+    public void getNav() {
     }
 }
