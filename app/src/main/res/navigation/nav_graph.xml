@@ -55,4 +55,14 @@
             android:id="@+id/action_registerUserFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
     </fragment><action android:id="@+id/action_global_mainFragment" app:destination="@id/mainFragment"/><action android:id="@+id/action_global_feedFragment" app:destination="@id/feedFragment"/>
+    <fragment
+        android:id="@+id/favoriteFrag"
+        android:name="com.aviv.rebuy.FavoriteFrag"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/mapFrag"
+        android:name="com.aviv.rebuy.MapFrag"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>
