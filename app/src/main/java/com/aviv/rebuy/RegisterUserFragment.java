@@ -50,11 +50,11 @@ public class RegisterUserFragment extends Fragment {
         regBtn=view.findViewById(R.id.regFrag_reg_btn);
         pb=view.findViewById(R.id.regFrag_progressBar);
 
-        fAuth=FirebaseAuth.getInstance();
-        if (fAuth.getCurrentUser()!=null) {
-            Navigation.findNavController(view).navigate(R.id.action_registerUserFragment_to_feedFragment);
-
-        }
+//        fAuth=FirebaseAuth.getInstance();
+//        if (fAuth.getCurrentUser()!=null) {
+//            Navigation.findNavController(view).navigate(R.id.action_registerUserFragment_to_feedFragment);
+//
+//        }
 
 
 

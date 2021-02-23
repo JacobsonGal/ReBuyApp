@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.bottom_navigation);
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
         bottomNavigationView.setVisibility(View.INVISIBLE);
+
+        //hide action bar
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
