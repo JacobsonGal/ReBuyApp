@@ -1,6 +1,10 @@
 package com.aviv.rebuy.Model;
 
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class User {
 
@@ -10,9 +14,23 @@ public class User {
         private String name;
         private String phoneNumber;
         private String password;
+        private String imageUrl;
+         private Long lastUpdated;
 
 
 
+
+
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("name", name);
+        result.put("phone", phoneNumber);
+        result.put("imageUrl", imageUrl);
+        result.put("lastUpdated", FieldValue.serverTimestamp());
+        return result;
+    }
 
     public List<Product> getFavorites() {
         return favorites;
@@ -58,6 +76,20 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Long getLastUpdated() {
+        return lastUpdated;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setLastUpdated(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
 }

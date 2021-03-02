@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_registerUserFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_registerUserFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment><action android:id="@+id/action_global_mainFragment" app:destination="@id/mainFragment"/><action android:id="@+id/action_global_feedFragment" app:destination="@id/feedFragment"/>
     <fragment
         android:id="@+id/favoriteFrag"

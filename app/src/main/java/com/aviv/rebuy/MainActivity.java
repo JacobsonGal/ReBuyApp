@@ -18,7 +18,6 @@ import android.widget.Toolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import testFirebase.ModelFirebase;
 
 public class MainActivity extends AppCompatActivity {
     NavController navController;

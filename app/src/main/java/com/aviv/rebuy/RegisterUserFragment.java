@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.aviv.rebuy.Model.Model;
+import com.aviv.rebuy.Model.Product;
+import com.aviv.rebuy.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,11 +32,12 @@ import static android.content.ContentValues.TAG;
  * create an instance of this fragment.
  */
 public class RegisterUserFragment extends Fragment {
-     FirebaseAuth fAuth;
+     FirebaseAuth fAuth=FirebaseAuth.getInstance();
     EditText fullName;
     EditText email;
     EditText password;
     EditText password2;
+    EditText phone;
     Button regBtn;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     ProgressBar pb;
@@ -49,7 +53,7 @@ public class RegisterUserFragment extends Fragment {
         password2=view.findViewById(R.id.reg_inputPassword2);
         regBtn=view.findViewById(R.id.regFrag_reg_btn);
         pb=view.findViewById(R.id.regFrag_progressBar);
-
+        phone=view.findViewById(R.id.reg_inputPhone);
 
 
 
@@ -60,12 +64,17 @@ public class RegisterUserFragment extends Fragment {
               String mail=email.getText().toString().trim();
               String pass1=password.getText().toString().trim();
               String pass2=password2.getText().toString().trim();
+              String phoneNum=phone.getText().toString().trim();
               if(TextUtils.isEmpty(name))
               {
                   fullName.setError("please enter full name");
                   return;
               }
-
+              if(TextUtils.isEmpty(phoneNum))
+              {
+                  phone.setError("please enter a phone number");
+                  return;
+              }
               if(TextUtils.isEmpty(mail) && mail.matches(emailPattern))
               {
                   fullName.setError("please enter  correct   email");
@@ -98,8 +107,19 @@ public class RegisterUserFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    Toast.makeText(getContext(),"user created",Toast.LENGTH_LONG).show();
-                    Navigation.findNavController(view).navigate(R.id.action_registerUserFragment_to_feedFragment);
+                    User user=new User();
+                    user.setId(mail);
+                    user.setName(name);
+                    user.setPhoneNumber(phoneNum);
+                    Model.instance.addUser(user, new Model.AddUserListener() {
+                        @Override
+                        public void onComplete() {
+                            Log.d("TAG","user added to database");
+                        }
+                    });
+
+                    Toast.makeText(getContext(),"user registered",Toast.LENGTH_LONG).show();
+                    Navigation.findNavController(view).navigate(R.id.action_registerUserFragment_to_loginFragment);
                 }
                 else
                 {

@@ -1,13 +1,69 @@
 package com.aviv.rebuy.Model;
 
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Product {
 
 
-    private int id;
+    private String id;
     private String name;
     private String description;
     private Double price;
     private String condition;
+    private  String OwnerId;
+    private String imageUrl;
+    private Boolean isDeleted=false;
+    private Long lastUpdated;
+
+
+
+
+
+
+
+
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("name", name);
+        result.put("description", description);
+        result.put("imageUrl", imageUrl);
+        result.put("lastUpdated", FieldValue.serverTimestamp());
+        result.put("price",price);
+        result.put("ownerId", OwnerId);
+        result.put("isDeleted", isDeleted);
+
+        return result;
+    }
+
+
+    public void setOwnerId(String ownerId) {
+        OwnerId = ownerId;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public String getOwnerId() {
+        return OwnerId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
 
 
@@ -27,7 +83,7 @@ public class Product {
         this.condition = condition;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getName() {
@@ -46,10 +102,17 @@ public class Product {
         return condition;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
+    public Long getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 
 
 }
