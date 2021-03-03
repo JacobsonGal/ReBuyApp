@@ -19,8 +19,6 @@ public interface ProductDao {
     @Delete
     void delete(Product product);
 
-
-    
     //filtering and etc if we want
 
 
