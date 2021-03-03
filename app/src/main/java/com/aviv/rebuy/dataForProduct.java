@@ -5,7 +5,7 @@ public class dataForProduct {
     public static String[] title=new String[]{
       "אייפון למכירה",
       "גלאקסי s9" ,
-      "מיוחד בשביל עמית קליין",
+      "מיוחד בשביל אושר נתי האח",
       "shirt"
     };
 
