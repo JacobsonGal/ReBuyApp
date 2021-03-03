@@ -1,13 +1,20 @@
 package com.aviv.rebuy.Model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class User {
 
+@Entity
+public class User {
+        @PrimaryKey
+        @NonNull
         private List<Product> favorites;
         private List<Product> sell;
         private String id;
