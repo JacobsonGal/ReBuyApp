@@ -1,13 +1,18 @@
 package com.aviv.rebuy.Model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
 public class Product {
-
-
+    @PrimaryKey
+    @NonNull
     private String id;
     private String name;
     private String description;
@@ -17,13 +22,6 @@ public class Product {
     private String imageUrl;
     private Boolean isDeleted=false;
     private Long lastUpdated;
-
-
-
-
-
-
-
 
 
     public Map<String, Object> toMap() {
