@@ -1,5 +1,6 @@
 package com.aviv.rebuy.Model;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,7 +12,7 @@ import java.util.List;
 @Dao
 public interface ProductDao {
     @Query("select * from Product")
-    List<Product> getAllProducts();
+    LiveData<List<Product>> getAllProducts();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Product... product);

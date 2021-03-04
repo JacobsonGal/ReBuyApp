@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
@@ -36,6 +37,21 @@ public class Product {
         result.put("isDeleted", isDeleted);
 
         return result;
+    }
+
+
+
+    public void fromMap(Map<String, Object> map){
+        id = (String)map.get("id");
+        name = (String)map.get("name");
+        description = (String)map.get("description");
+        imageUrl = (String)map.get("imageUrl");
+        price = (Double) map.get("price");
+        OwnerId = (String)map.get("ownderId");
+        Timestamp ts = (Timestamp)map.get("lastUpdated");
+        isDeleted = (Boolean) map.get("isDeleted");
+        lastUpdated = ts.getSeconds();
+        //long time = ts.toDate().getTime();
     }
 
 

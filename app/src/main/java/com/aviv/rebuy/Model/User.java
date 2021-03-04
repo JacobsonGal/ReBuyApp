@@ -11,13 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 
-@Entity
 public class User {
-        @PrimaryKey
-        @NonNull
+
+        private String id;
         private List<Product> favorites;
         private List<Product> sell;
-        private String id;
         private String name;
         private String phoneNumber;
         private String password;

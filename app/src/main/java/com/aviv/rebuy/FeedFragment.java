@@ -16,14 +16,9 @@ import com.aviv.rebuy.data.model.ListAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FeedFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class FeedFragment extends Fragment {
-ImageView logout;
-    private FirebaseAuth fAuth;
+
     public FeedFragment() {
         // Required empty public constructor
     }
@@ -38,19 +33,12 @@ ImageView logout;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-       // logout user
 
-        logout=view.findViewById(R.id.feedFrag_logout);
-        fAuth=FirebaseAuth.getInstance();
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
 
-            //return to main fragment
-            public void onClick(View v) {
-                fAuth .signOut();
-                Navigation.findNavController(v).navigate(R.id.action_global_mainFragment);
-            }
-        });
+
+
+
+
 
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
         navBar.setVisibility(View.VISIBLE);
