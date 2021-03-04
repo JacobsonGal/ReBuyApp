@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 
 import com.aviv.rebuy.MyApplication;
 
-@Database(entities = {Product.class}, version = 4)
+@Database(entities = {Product.class}, version = 5)
 abstract class AppLocalDbRepository extends RoomDatabase {
     //public abstract UserDao userDao();
     public abstract ProductDao productDao();

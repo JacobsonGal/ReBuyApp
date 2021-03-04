@@ -19,7 +19,7 @@ public class Product {
     private String description;
     private Double price;
     private String condition;
-    private  String OwnerId;
+    private String OwnerId;
     private String imageUrl;
     private Boolean isDeleted=false;
     private Long lastUpdated;

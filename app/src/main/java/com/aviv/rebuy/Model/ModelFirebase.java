@@ -28,10 +28,10 @@ public class ModelFirebase {
         void onComplete(List<Product> list);
     }
 
-    public void gelAllProducts(Long lastUpdated, final GetAllProductsListener listener) {
+    public void getAllProducts(Long lastUpdated, final GetAllProductsListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Timestamp ts = new Timestamp(lastUpdated, 0);
-        db.collection("users").whereGreaterThanOrEqualTo("lastUpdated", ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("products").whereGreaterThanOrEqualTo("lastUpdated", ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Product> data = new LinkedList<Product>();
@@ -88,6 +88,18 @@ public class ModelFirebase {
             }
         });
     }
+
+    public void delete(Product product, final Model.DeleteListener listener) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("students").document(student.getId())
+//                .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                listener.onComplete();
+//            }
+//        });
+    }
+
 
 
     public void uploadImage(Bitmap imageBmp, String name, final Model.UploadImageListener listener){
