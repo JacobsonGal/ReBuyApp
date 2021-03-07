@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ public class FeedFragment extends Fragment {
 
     FeedViewModel viewModel;
     Button addBtn;
-  //  MyAdapter  adapter;
+
     SwipeRefreshLayout sref;
     public FeedFragment() {
         // Required empty public constructor
@@ -77,7 +78,12 @@ public class FeedFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-
+    listAdapter.setOnClickListener(new OnItemClickListener() {
+    @Override
+    public void onItemClick(int position) {
+        Log.d("TAG123","row was clicked" + position);
+    }
+    });
 
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
         navBar.setVisibility(View.VISIBLE);
@@ -92,33 +98,21 @@ public class FeedFragment extends Fragment {
 
         return view;
     }
+    interface  OnItemClickListener{
+    void onItemClick(int position);
+    }
 
 
-    public class ListAdapter extends RecyclerView.Adapter {
 
 
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.suggestion_list_items,parent,false);
-            return  new ListViewHolder(view);
-        }
 
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            ((ListViewHolder) holder ).bindView(position);
-        }
 
-        @Override
-        public int getItemCount() {
-            if (viewModel.getList().getValue() == null){
-                return 0;
-            }
-            return viewModel.getList().getValue().size();
-        }
-
-        private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private class ListViewHolder extends RecyclerView.ViewHolder {
+            public OnItemClickListener listener;
             private TextView itemText;
             private ImageView itemImage;
+            private  TextView descText;
+            int position;
             private LiveData<List<Product>> productList = Model.instance.getAllProducts();
 
 
@@ -127,18 +121,56 @@ public class FeedFragment extends Fragment {
                 super(itemView);
                 itemText = (TextView) itemView.findViewById(R.id.textView4);
                 itemImage = (ImageView) itemView.findViewById(R.id.itemImage);
-                itemView.setOnClickListener(this);
+                descText = (TextView) itemView.findViewById(R.id.description_textView);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+    listener.onItemClick(position);
+                    }
+                });
 
             }
 
             public void bindView(int position){
                 itemText.setText(viewModel.getList().getValue().get(position).getName());
+                descText.setText(viewModel.getList().getValue().get(position).getDescription());
                 Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
-            }
-
-            public void onClick(View view){
+            this.position=position;
 
             }
+
+
+        }
+
+    public class ListAdapter extends RecyclerView.Adapter {
+        private OnItemClickListener listener;
+
+        void setOnClickListener(OnItemClickListener listener){
+            this.listener =listener;
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.suggestion_list_items,parent,false);
+            ListViewHolder holder = new ListViewHolder(view);
+            holder.listener = listener;
+
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            ((ListViewHolder) holder ).bindView(position);
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            if (viewModel.getList().getValue() == null){
+                return 0;
+            }
+            return viewModel.getList().getValue().size();
         }
     }
 
