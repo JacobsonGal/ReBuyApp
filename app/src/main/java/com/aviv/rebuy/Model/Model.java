@@ -30,7 +30,7 @@ public class Model {
     public LiveData<List<Product>> getAllProducts() {
         if (productList == null){
             productList = modelSql.getAllProducts();
-            //refreshAllStudents(null);
+            refreshAllProducts(null);
         }
         return productList;
     }
