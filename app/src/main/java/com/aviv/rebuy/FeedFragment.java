@@ -23,6 +23,7 @@ import com.aviv.rebuy.Model.Model;
 import com.aviv.rebuy.Model.Product;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.List;
@@ -116,23 +117,25 @@ public class FeedFragment extends Fragment {
         }
 
         private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private TextView mItemText;
-            private ImageView mItemImage;
+            private TextView itemText;
+            private ImageView itemImage;
             private LiveData<List<Product>> productList = Model.instance.getAllProducts();
 
 
 
             public ListViewHolder(View itemView){
                 super(itemView);
-                mItemText = (TextView) itemView.findViewById(R.id.textView4);
-                mItemImage = (ImageView) itemView.findViewById(R.id.itemImage);
+                itemText = (TextView) itemView.findViewById(R.id.textView4);
+                itemImage = (ImageView) itemView.findViewById(R.id.itemImage);
                 itemView.setOnClickListener(this);
 
             }
 
             public void bindView(int position){
 
-                mItemText.setText(viewModel.getList().getValue().get(position).getName());
+                itemText.setText(viewModel.getList().getValue().get(position).getName());
+
+                Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
 
             }
 
