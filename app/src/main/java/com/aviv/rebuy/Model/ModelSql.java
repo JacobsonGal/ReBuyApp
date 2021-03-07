@@ -13,7 +13,7 @@ public class ModelSql {
         return AppLocalDb.db.productDao().getAllProducts();
     }
 
-    public interface AddUserListener{
+    public interface AddProductListener{
         void onComplete();
     }
     public void addProduct(final Product product, final Model.AddProductListener listener){

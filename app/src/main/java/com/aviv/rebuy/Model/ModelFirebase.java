@@ -51,6 +51,7 @@ public class ModelFirebase {
 
     public void addProduct(Product product, final Model.AddProductListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         db.collection("products").document(product.getId())
                 .set(product.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

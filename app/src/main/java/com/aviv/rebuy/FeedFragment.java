@@ -132,11 +132,8 @@ public class FeedFragment extends Fragment {
             }
 
             public void bindView(int position){
-
                 itemText.setText(viewModel.getList().getValue().get(position).getName());
-
                 Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
-
             }
 
             public void onClick(View view){
