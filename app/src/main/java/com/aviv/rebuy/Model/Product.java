@@ -29,6 +29,7 @@ public class Product {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
         result.put("name", name);
+        result.put("condition",condition);
         result.put("description", description);
         result.put("imageUrl", imageUrl);
         result.put("lastUpdated", FieldValue.serverTimestamp());
@@ -47,7 +48,8 @@ public class Product {
         description = (String)map.get("description");
         imageUrl = (String)map.get("imageUrl");
         price = (Double) map.get("price");
-        OwnerId = (String)map.get("ownderId");
+        condition= (String) map.get("condition");
+        OwnerId = (String)map.get("ownerId");
         Timestamp ts = (Timestamp)map.get("lastUpdated");
         isDeleted = (Boolean) map.get("isDeleted");
         lastUpdated = ts.getSeconds();

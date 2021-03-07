@@ -66,7 +66,7 @@
             android:id="@+id/upload_inputTitle"
             android:layout_width="330dp"
             android:layout_height="55dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="192dp"
             android:background="@drawable/round_border"
             android:drawableStart="@drawable/ic_rebuyapple"
             android:drawablePadding="16dp"
@@ -75,7 +75,7 @@
             android:inputType="text"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.837"
+            app:layout_constraintHorizontal_bias="0.418"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

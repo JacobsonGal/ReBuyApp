@@ -44,7 +44,7 @@ public class UploadFragment extends Fragment  {
     EditText price;
     Button upload_btn;
     ImageView avatarImageView;
-
+Spinner spinner;
     public UploadFragment() {
         // Required empty public constructor
     }
@@ -63,7 +63,7 @@ public class UploadFragment extends Fragment  {
         avatarImageView = v.findViewById(R.id.upload_imageView);
         editImage = v.findViewById(R.id.upload_imageButton);
 
-        Spinner spinner = (Spinner) v.findViewById(R.id.spinner);
+         spinner = (Spinner) v.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(),R.array.condition, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -115,7 +115,7 @@ public class UploadFragment extends Fragment  {
         product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         product.setPrice(Double.parseDouble(price.getText().toString()));
          product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
-        // product.setCondition();
+         product.setCondition(spinner.getSelectedItem().toString());
         BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
         Log.d("BITAG",drawable.toString());
         Bitmap bitmap = drawable.getBitmap();
