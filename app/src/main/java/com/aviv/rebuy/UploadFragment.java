@@ -112,9 +112,9 @@ public class UploadFragment extends Fragment  {
 
         product.setName(title.getText().toString());
         product.setDescription(description.getText().toString());
-        product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().toString());
+        product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         product.setPrice(Double.parseDouble(price.getText().toString()));
-         product.setId((title.getText().toString().trim()+description.getText().toString().trim()));
+         product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
         // product.setCondition();
         BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
         Log.d("BITAG",drawable.toString());
