@@ -15,8 +15,7 @@ import java.util.Map;
 public class User {
         @PrimaryKey
         @NonNull
-        private List<Product> favorites;
-        private List<Product> sell;
+
         private String id;
         private String name;
         private String phoneNumber;
@@ -36,13 +35,7 @@ public class User {
         return result;
     }
 
-    public List<Product> getFavorites() {
-        return favorites;
-    }
 
-    public List<Product> getSell() {
-        return sell;
-    }
 
     public String getPassword() {
         return password;
@@ -71,11 +64,7 @@ public class User {
             this.phoneNumber = phoneNumber;
         }
     public void setFavorites(List<Product> favorites) {
-        this.favorites = favorites;
-    }
 
-    public void setSell(List<Product> sell) {
-        this.sell = sell;
     }
 
     public void setPassword(String password) {
