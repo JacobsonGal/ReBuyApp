@@ -13,4 +13,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="twitterUsername">\@joeytribbiani</string>
     <string name="yaniv_gabot">Yaniv Gabot</string>
+    <string-array name="condition">
+        <item>PACKED</item>
+        <item>UNPACKED</item>
+    </string-array>
 </resources>
