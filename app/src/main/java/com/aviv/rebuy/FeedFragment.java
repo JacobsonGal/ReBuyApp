@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -82,6 +83,8 @@ public class FeedFragment extends Fragment {
     @Override
     public void onItemClick(int position) {
         Log.d("TAG123","row was clicked" + position);
+        FeedFragmentDirections.ActionFeedFragmentToDetailsFragment action = FeedFragmentDirections.actionFeedFragmentToDetailsFragment(position);
+        Navigation.findNavController(view).navigate(action);
     }
     });
 
@@ -101,11 +104,6 @@ public class FeedFragment extends Fragment {
     interface  OnItemClickListener{
     void onItemClick(int position);
     }
-
-
-
-
-
 
         private class ListViewHolder extends RecyclerView.ViewHolder {
             public OnItemClickListener listener;
