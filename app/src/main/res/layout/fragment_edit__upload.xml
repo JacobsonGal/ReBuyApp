@@ -156,13 +156,9 @@
             android:id="@+id/upload_imageButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/upload_title_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.922"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.673"
-            app:srcCompat="@drawable/ic_baseline_account_circle_24" />
+            app:layout_constraintBottom_toBottomOf="@+id/upload_imageView"
+            app:layout_constraintStart_toEndOf="@+id/upload_imageView"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
