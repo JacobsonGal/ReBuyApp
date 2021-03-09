@@ -58,7 +58,7 @@ Spinner spinner;
         title = v.findViewById(R.id.upload_title);
         description = v.findViewById(R.id.upload_inputDescription);
         price = v.findViewById(R.id.upload_inputPrice);
-        upload_btn = v.findViewById(R.id.edit_upload_btn);
+        upload_btn = v.findViewById(R.id.upload_btn);
         avatarImageView = v.findViewById(R.id.upload_imageView);
        // avatarImageView.setImageBitmap();
         editImage = v.findViewById(R.id.upload_imageButton);
