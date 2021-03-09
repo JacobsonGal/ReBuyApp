@@ -40,6 +40,21 @@ Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
         viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_details_, container, false);
+<<<<<<< Updated upstream
+=======
+
+        delbtn = v.findViewById(R.id.details_deletebtn);
+        editbtn = v.findViewById(R.id.details_editbtn);
+        addntb = v.findViewById(R.id.details_likebtn);
+
+
+        if(viewModel.getList().getValue().get(productId).getOwnerId().equals(FirebaseAuth.getInstance().getUid())) {
+            delbtn.setVisibility(View.VISIBLE);
+        editbtn.setVisibility(View.VISIBLE);
+        }
+
+
+>>>>>>> Stashed changes
         itemText = v.findViewById(R.id.title_textView);
         itemText.setText(viewModel.getList().getValue().get(productId).getName());
         itemImage = v.findViewById(R.id.details_imageView4);
