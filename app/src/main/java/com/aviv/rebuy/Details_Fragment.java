@@ -28,7 +28,7 @@ public class Details_Fragment extends Fragment {
     private  TextView conditionText;
     private Button delbtn;
     private Button editbtn;
-    private Button addntb;
+    private Button addbtn;
 
     public Details_Fragment() {
         // Required empty public constructor
@@ -47,12 +47,14 @@ Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
 
         delbtn = v.findViewById(R.id.details_deletebtn);
         editbtn = v.findViewById(R.id.details_editbtn);
-        addntb = v.findViewById(R.id.details_likebtn);
+        addbtn = v.findViewById(R.id.details_addbtn);
 
-        if(viewModel.getList().getValue().get(productId).getOwnerId()== FirebaseAuth.getInstance().getUid()) {
+
+        if(viewModel.getList().getValue().get(productId).getOwnerId().equals(FirebaseAuth.getInstance().getUid())) {
             delbtn.setVisibility(View.VISIBLE);
         editbtn.setVisibility(View.VISIBLE);
         }
+
 
 
         itemText = v.findViewById(R.id.title_textView);
