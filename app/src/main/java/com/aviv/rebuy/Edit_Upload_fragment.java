@@ -55,7 +55,9 @@ public class Edit_Upload_fragment extends Fragment {
         title = v.findViewById(R.id.upload_title_edit);
         title.setText(viewModel.getList().getValue().get(productId).getName());
         description = v.findViewById(R.id.upload_inputDescription);
+        description.setText(viewModel.getList().getValue().get(productId).getDescription());
         price = v.findViewById(R.id.upload_inputPrice);
+        price.setText(viewModel.getList().getValue().get(productId).getPrice().toString());
         upload_btn = v.findViewById(R.id.edit_upload_btn);
         avatarImageView = v.findViewById(R.id.upload_imageView);
         editImage = v.findViewById(R.id.upload_imageButton);
@@ -104,7 +106,7 @@ public class Edit_Upload_fragment extends Fragment {
         });
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit__upload, container, false);
+        return v;
     }
 
 
