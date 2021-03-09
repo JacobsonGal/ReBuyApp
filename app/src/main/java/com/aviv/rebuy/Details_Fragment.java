@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,6 +69,16 @@ Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
         priceText.setText(viewModel.getList().getValue().get(productId).getPrice().toString());
         conditionText = v.findViewById(R.id.details_condition);
         conditionText.setText(viewModel.getList().getValue().get(productId).getCondition());
+
+        editbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Details_FragmentDirections.ActionDetailsFragmentToEditUploadFragment toEditUpload = Details_FragmentDirections.actionDetailsFragmentToEditUploadFragment(productId);
+                Navigation.findNavController(v).navigate(toEditUpload);
+            }
+        });
+
         return v;
     }
 }

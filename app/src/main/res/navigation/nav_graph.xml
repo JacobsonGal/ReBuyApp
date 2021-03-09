@@ -80,6 +80,18 @@
         <argument
             android:name="productId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_details_Fragment_to_edit_Upload_fragment"
+            app:destination="@id/edit_Upload_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/edit_Upload_fragment"
+        android:name="com.aviv.rebuy.Edit_Upload_fragment"
+        android:label="fragment_edit__upload_fragment"
+        tools:layout="@layout/fragment_edit__upload" >
+        <argument
+            android:name="productId"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

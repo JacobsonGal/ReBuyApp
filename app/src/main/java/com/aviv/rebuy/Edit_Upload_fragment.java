@@ -11,10 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,34 +35,37 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 
-public class UploadFragment extends Fragment  {
+public class Edit_Upload_fragment extends Fragment {
 
+    FeedViewModel viewModel;
     EditText title;
     EditText description;
     ImageButton editImage;
     EditText price;
     Button upload_btn;
     ImageView avatarImageView;
-Spinner spinner;
-    public UploadFragment() {
-        // Required empty public constructor
-    }
+    Spinner spinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-
-        View v= inflater.inflate(R.layout.fragment_upload, container, false);
-        title = v.findViewById(R.id.upload_title);
+        viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
+        int productId = Details_FragmentArgs.fromBundle(getArguments()).getProductId();
+        View v= inflater.inflate(R.layout.fragment_edit__upload, container, false);
+        title = v.findViewById(R.id.upload_title_edit);
+        title.setText(viewModel.getList().getValue().get(productId).getName());
         description = v.findViewById(R.id.upload_inputDescription);
         price = v.findViewById(R.id.upload_inputPrice);
         upload_btn = v.findViewById(R.id.edit_upload_btn);
         avatarImageView = v.findViewById(R.id.upload_imageView);
         editImage = v.findViewById(R.id.upload_imageButton);
 
-         spinner = (Spinner) v.findViewById(R.id.spinner);
+
+
+
+
+
+        spinner = (Spinner) v.findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(),R.array.condition, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -87,7 +90,6 @@ Spinner spinner;
 
             }
         });
-
         editImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,22 +103,25 @@ Spinner spinner;
             }
         });
 
-
-
-        return v;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_edit__upload, container, false);
     }
+
 
     private void saveProduct() {
         final Product product = new Product();
+
+
+
 
         product.setName(title.getText().toString());
         product.setDescription(description.getText().toString());
         product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         product.setPrice(Double.parseDouble(price.getText().toString()));
-         product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
-         product.setCondition(spinner.getSelectedItem().toString());
+        product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
+        product.setCondition(spinner.getSelectedItem().toString());
         BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
-        Log.d("BITAG",drawable.toString());
+
         Bitmap bitmap = drawable.getBitmap();
 
         Model.instance.uploadImage(bitmap, product.getName(), new Model.UploadImageListener() {
@@ -204,6 +209,4 @@ Spinner spinner;
             }
         }
     }
-
-
 }
