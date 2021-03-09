@@ -42,7 +42,6 @@ public class FeedFragment extends Fragment {
     }
 
 
-
     void reloadData(){
         Model.instance.refreshAllProducts(new Model.GetAllProductsListener() {
             @Override
@@ -51,7 +50,6 @@ public class FeedFragment extends Fragment {
             }
         });
     }
-
 
 
 
@@ -162,7 +160,6 @@ public class FeedFragment extends Fragment {
 
 
         }
-
         @Override
         public int getItemCount() {
             if (viewModel.getList().getValue() == null){
@@ -171,6 +168,5 @@ public class FeedFragment extends Fragment {
             return viewModel.getList().getValue().size();
         }
     }
-
 
 }
