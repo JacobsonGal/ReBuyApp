@@ -97,8 +97,10 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:text="Delete"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            tools:visibility="invisible" />
 
         <Button
             android:id="@+id/details_editbtn"
@@ -107,8 +109,10 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:text="EDIT"
+            android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/details_deletebtn"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            tools:visibility="invisible" />
 
         <Button
             android:id="@+id/details_addbtn"
