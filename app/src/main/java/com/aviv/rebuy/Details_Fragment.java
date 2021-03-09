@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aviv.rebuy.Model.Model;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 
@@ -24,7 +26,9 @@ public class Details_Fragment extends Fragment {
     private  TextView descText;
     private  TextView priceText;
     private  TextView conditionText;
-
+    private Button delbtn;
+    private Button editbtn;
+    private Button addbtn;
 
     public Details_Fragment() {
         // Required empty public constructor
@@ -40,12 +44,10 @@ Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
         viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_details_, container, false);
-<<<<<<< Updated upstream
-=======
 
         delbtn = v.findViewById(R.id.details_deletebtn);
         editbtn = v.findViewById(R.id.details_editbtn);
-        addntb = v.findViewById(R.id.details_likebtn);
+        addbtn = v.findViewById(R.id.details_addbtn);
 
 
         if(viewModel.getList().getValue().get(productId).getOwnerId().equals(FirebaseAuth.getInstance().getUid())) {
@@ -54,7 +56,7 @@ Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
         }
 
 
->>>>>>> Stashed changes
+
         itemText = v.findViewById(R.id.title_textView);
         itemText.setText(viewModel.getList().getValue().get(productId).getName());
         itemImage = v.findViewById(R.id.details_imageView4);
