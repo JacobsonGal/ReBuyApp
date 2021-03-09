@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aviv.rebuy.Model.Model;
@@ -29,13 +30,15 @@ import com.squareup.picasso.Picasso;
 
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class FeedFragment extends Fragment {
 
     FeedViewModel viewModel;
     Button addBtn;
-
+    ProgressBar pb;
     SwipeRefreshLayout sref;
     public FeedFragment() {
         // Required empty public constructor
@@ -63,7 +66,7 @@ public class FeedFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
       //TODO: add button and etc
         sref = view.findViewById(R.id.swiperefresh);
-
+        pb = view.findViewById(R.id.feed_progress);
         sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -133,7 +136,9 @@ public class FeedFragment extends Fragment {
                 itemText.setText(viewModel.getList().getValue().get(position).getName());
                 descText.setText(viewModel.getList().getValue().get(position).getDescription());
                 Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
+
             this.position=position;
+
 
             }
 
@@ -152,6 +157,13 @@ public class FeedFragment extends Fragment {
             View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.suggestion_list_items,parent,false);
             ListViewHolder holder = new ListViewHolder(view);
             holder.listener = listener;
+            Timer t =new Timer();
+            t.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    pb.setVisibility(View.INVISIBLE);
+                }
+            },2500);
 
             return holder;
         }
@@ -159,7 +171,6 @@ public class FeedFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ((ListViewHolder) holder ).bindView(position);
-
 
         }
 
