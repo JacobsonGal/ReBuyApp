@@ -1,5 +1,6 @@
 package com.aviv.rebuy;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    @Nullable
     private GoogleMap mMap;
 
     @Override
@@ -36,11 +38,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        System.out.println("onMapReady");
+        if(googleMap!=null)
+        {
+            mMap=googleMap;
+            // Add a marker in colman and move the camera
+            LatLng colman = new LatLng(31.969942746673553, 34.77286230673707);
+            mMap.addMarker(new MarkerOptions().position(colman).title("Marker in COLMAN"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(colman));
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            mMap.setTrafficEnabled(true);
+        }
     }
+
 }
