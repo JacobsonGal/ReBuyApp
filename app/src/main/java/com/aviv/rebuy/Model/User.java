@@ -16,10 +16,12 @@ public class User {
         private String id;
         private List<Product> favorites;
         private List<Product> sell;
+         private String imageUrl;
+
+
         private String name;
         private String phoneNumber;
         private String password;
-        private String imageUrl;
          private Long lastUpdated;
 
 
