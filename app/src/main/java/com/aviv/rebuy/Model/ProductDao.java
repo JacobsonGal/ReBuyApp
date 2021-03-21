@@ -23,7 +23,5 @@ public interface ProductDao {
     //filtering and etc if we want
 
 
-
-
 }
 

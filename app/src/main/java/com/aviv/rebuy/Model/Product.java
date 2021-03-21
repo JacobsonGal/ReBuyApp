@@ -8,6 +8,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -37,6 +38,7 @@ public class Product {
         result.put("ownerId", OwnerId);
         result.put("isDeleted", isDeleted);
 
+
         return result;
     }
 
@@ -53,6 +55,7 @@ public class Product {
         Timestamp ts = (Timestamp)map.get("lastUpdated");
         isDeleted = (Boolean) map.get("isDeleted");
         lastUpdated = ts.getSeconds();
+
         //long time = ts.toDate().getTime();
     }
 
