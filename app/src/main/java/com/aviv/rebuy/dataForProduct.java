@@ -12,7 +12,6 @@ public class dataForProduct {
     public  static int[] picturePath = new int[]{
             R.drawable.iphone,
             R.drawable.glaxay,
-            R.drawable.dildo,
             R.drawable.shirt
     };
 }

@@ -22,7 +22,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -38,7 +37,7 @@ public class LoginFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_login, container, false);
         TextView register=view.findViewById(R.id.loginfrag_register);
-        final EditText usernameEditText = view.findViewById(R.id.inputSearch);
+        final EditText usernameEditText = view.findViewById(R.id.feedFrag_inputSearch);
         final EditText passwordEditText = view.findViewById(R.id.reg_inputPassword);
         final Button loginButton = view.findViewById(R.id.regFrag_reg_btn);
         forgotPassword=view.findViewById(R.id.loginFrag_forgotPassword);
