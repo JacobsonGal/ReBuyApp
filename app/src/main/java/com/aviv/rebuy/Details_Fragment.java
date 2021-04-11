@@ -1,7 +1,9 @@
 package com.aviv.rebuy;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
@@ -12,13 +14,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aviv.rebuy.Model.Model;
+import com.aviv.rebuy.Model.Product;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class Details_Fragment extends Fragment {
 
@@ -31,17 +44,16 @@ public class Details_Fragment extends Fragment {
     private Button delbtn;
     private Button editbtn;
     private Button addbtn;
+    private ImageButton favoriteButton;
 
     public Details_Fragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     int productId = Details_FragmentArgs.fromBundle(getArguments()).getProductId();
-Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
+    Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
 
         viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
         // Inflate the layout for this fragment
@@ -50,14 +62,24 @@ Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
         delbtn = v.findViewById(R.id.details_deletebtn);
         editbtn = v.findViewById(R.id.details_editbtn);
         addbtn = v.findViewById(R.id.details_addbtn);
-
+        favoriteButton = v.findViewById(R.id.favoriteButton);
+        favoriteButton.setVisibility(View.INVISIBLE);
 
         if(viewModel.getList().getValue().get(productId).getOwnerId().equals(FirebaseAuth.getInstance().getUid())) {
             delbtn.setVisibility(View.VISIBLE);
         editbtn.setVisibility(View.VISIBLE);
         }
 
+        Product product = viewModel.getList().getValue().get(productId);
 
+        FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                .collection("favorites")
+                .document(String.valueOf(product.getId())).get().addOnCompleteListener(task -> {
+                    if(task.getResult().exists()){
+                      addbtn.setVisibility(View.INVISIBLE);
+                      favoriteButton.setVisibility(View.VISIBLE);
+                    }
+                });
 
         itemText = v.findViewById(R.id.title_textView);
         itemText.setText(viewModel.getList().getValue().get(productId).getName());
@@ -73,10 +95,31 @@ Log.d("TAG123","ID IS NOW VERY GOOD " + productId);
         editbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Details_FragmentDirections.ActionDetailsFragmentToEditUploadFragment toEditUpload = Details_FragmentDirections.actionDetailsFragmentToEditUploadFragment(productId);
                 Navigation.findNavController(v).navigate(toEditUpload);
             }
+        });
+
+        addbtn.setOnClickListener(event -> {
+            addbtn.setVisibility(View.INVISIBLE);
+            favoriteButton.setVisibility(View.VISIBLE);
+            FirebaseFirestore.getInstance().collection("users")
+                    .document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                    .collection("favorites")
+                    .document(String.valueOf(product.getId())).set(product).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    System.out.println("done");
+
+                }})
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println(e.getMessage());
+                            addbtn.setVisibility(View.VISIBLE);
+                            favoriteButton.setVisibility(View.INVISIBLE);
+                        }
+                    });
         });
 
         return v;
