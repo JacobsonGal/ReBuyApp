@@ -80,13 +80,11 @@ public class FeedFragment extends Fragment {
         pb = view.findViewById(R.id.feed_progress);
         search = view.findViewById(R.id.feedFrag_inputSearch);
 
-
         sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 sref.setRefreshing(true);
                 reloadData();
-
             }
         });
 
@@ -167,19 +165,16 @@ public class FeedFragment extends Fragment {
                 }
             });
 
+            public void bindView(int position){
+                itemText.setText(viewModel.getList().getValue().get(position).getName());
+                descText.setText(viewModel.getList().getValue().get(position).getDescription());
+                Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
+
+            this.position=position;
+
+            }
+
         }
-
-        public void bindView(int position) {
-            itemText.setText(viewModel.getList().getValue().get(position).getName());
-            descText.setText(viewModel.getList().getValue().get(position).getDescription());
-            Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
-
-            this.position = position;
-
-
-        }
-
-
     }
 
     public class ListAdapter extends RecyclerView.Adapter  {
@@ -211,6 +206,7 @@ public class FeedFragment extends Fragment {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.suggestion_list_items, parent, false);
             ListViewHolder holder = new ListViewHolder(view);
             holder.listener = listener;
+
             Timer t = new Timer();
             t.schedule(new TimerTask() {
                 @Override
@@ -225,7 +221,6 @@ public class FeedFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ((ListViewHolder) holder).bindView(position);
-
         }
 
         @Override
