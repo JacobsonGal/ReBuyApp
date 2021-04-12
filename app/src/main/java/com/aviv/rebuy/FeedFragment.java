@@ -129,8 +129,6 @@ public class FeedFragment extends Fragment {
                 listAdapter.notifyDataSetChanged();
             }
         });
-
-
         return view;
     }
 
@@ -164,17 +162,15 @@ public class FeedFragment extends Fragment {
                     listener.onItemClick(position);
                 }
             });
-
-            public void bindView(int position){
-                itemText.setText(viewModel.getList().getValue().get(position).getName());
-                descText.setText(viewModel.getList().getValue().get(position).getDescription());
-                Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
-
-            this.position=position;
-
-            }
-
         }
+        public void bindView(int position){
+            itemText.setText(viewModel.getList().getValue().get(position).getName());
+            descText.setText(viewModel.getList().getValue().get(position).getDescription());
+            Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
+        this.position=position;
+        }
+
+
     }
 
     public class ListAdapter extends RecyclerView.Adapter  {
