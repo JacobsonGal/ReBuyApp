@@ -26,6 +26,11 @@ public class Product {
     private Long lastUpdated;
 
 
+    //TODO: add maps fields to toMap/fromMap;
+
+    private String lat;
+    private String lang;
+
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
@@ -134,4 +139,19 @@ public class Product {
     }
 
 
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
 }

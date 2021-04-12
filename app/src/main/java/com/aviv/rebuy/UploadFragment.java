@@ -37,6 +37,10 @@ import static android.app.Activity.RESULT_OK;
 
 public class UploadFragment extends Fragment  {
 
+
+    //TODO: add maps fields
+
+
     EditText title;
     EditText description;
     ImageButton editImage;

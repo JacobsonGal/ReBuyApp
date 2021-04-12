@@ -79,7 +79,7 @@ public class Details_Fragment extends Fragment {
                       addbtn.setVisibility(View.INVISIBLE);
                       favoriteButton.setVisibility(View.VISIBLE);
                     }
-                });
+        });
 
         itemText = v.findViewById(R.id.title_textView);
         itemText.setText(viewModel.getList().getValue().get(productId).getName());
@@ -100,6 +100,7 @@ public class Details_Fragment extends Fragment {
             }
         });
 
+      
         addbtn.setOnClickListener(event -> {
             addbtn.setVisibility(View.INVISIBLE);
             favoriteButton.setVisibility(View.VISIBLE);
