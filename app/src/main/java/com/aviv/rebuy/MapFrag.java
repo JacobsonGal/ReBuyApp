@@ -2,18 +2,27 @@ package com.aviv.rebuy;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MapFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFrag extends Fragment {
+public class MapFrag extends Fragment implements OnMapReadyCallback {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,5 +69,24 @@ public class MapFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_map, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        if (googleMap != null) {
+            // Add a marker in colman and move the camera
+            LatLng colman = new LatLng(31.969942746673553, 34.77286230673707);
+            googleMap.addMarker(new MarkerOptions().position(colman).title("Marker in COLMAN"));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(colman, 18));
+            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            googleMap.setTrafficEnabled(true);
+        }
     }
 }
