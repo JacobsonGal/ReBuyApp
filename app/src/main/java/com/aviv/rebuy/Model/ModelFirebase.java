@@ -17,6 +17,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -130,6 +131,22 @@ public class ModelFirebase {
     }
 
 //User
+
+    public interface GetAllUsersListener{ void onComplete(List<User> list);}
+    public void getAllUsers(final GetAllUsersListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").get().addOnCompleteListener(task -> {
+            List<User> data = new ArrayList<>();
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot doc : task.getResult()) {
+                    User user = new User();
+                    user.fromMap(doc.getData());
+                    data.add(user);
+                }
+            }
+            listener.onComplete(data);
+        });
+    }
 
     public void addUser(User user, final Model.AddUserListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

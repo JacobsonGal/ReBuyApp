@@ -15,7 +15,7 @@ import java.util.List;
 public class Model {
     public final static Model instance = new Model();
 
-    ModelFirebase modelFirebase = new ModelFirebase();
+   public ModelFirebase modelFirebase = new ModelFirebase();
    ModelSql modelSql = new ModelSql();
 
     private Model() {

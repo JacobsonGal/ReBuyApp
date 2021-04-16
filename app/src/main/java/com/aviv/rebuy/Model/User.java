@@ -4,26 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class User {
 
         private String id;
         private List<Product> favorites;
         private List<Product> sell;
-         private String imageUrl;
+        private String imageUrl;
 
 
         private String name;
         private String phoneNumber;
         private String password;
-         private Long lastUpdated;
-
+        private Long lastUpdated;
+        private double longitude = 0;
+        private double latitude = 0;
 
 
     public Map<String, Object> toMap() {
@@ -33,7 +34,20 @@ public class User {
         result.put("phone", phoneNumber);
         result.put("imageUrl", imageUrl);
         result.put("lastUpdated", FieldValue.serverTimestamp());
+        result.put("latitude", this.latitude);
+        result.put("longitude", this.longitude);
         return result;
+    }
+
+    public void fromMap(Map<String, Object> map) {
+        this.id = (String) map.get("id");
+        this.name = (String) map.get("name");
+        this.phoneNumber = (String) map.get("phone");
+        this.imageUrl = (String) map.get("imageUrl");
+        Timestamp ts = (Timestamp) map.get("lastUpdated");
+        this.lastUpdated = ts.getSeconds();
+        this.latitude = Double.valueOf(map.get("latitude").toString());
+        this.longitude = Double.valueOf(map.get("longitude").toString());
     }
 
     public List<Product> getFavorites() {
@@ -96,4 +110,19 @@ public class User {
         this.lastUpdated = lastUpdated;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
 }

@@ -10,13 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aviv.rebuy.Model.Model;
+import com.aviv.rebuy.Model.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MapFrag#newInstance} factory method to
@@ -76,6 +78,13 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
+
+    public void addUsersMarkers(List<User> users, GoogleMap googleMap) {
+        for (User user : users) {
+            LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
+            googleMap.addMarker(new MarkerOptions().position(location));
+        }
     }
 
     @Override

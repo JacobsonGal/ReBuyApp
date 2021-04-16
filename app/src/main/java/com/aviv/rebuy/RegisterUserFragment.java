@@ -1,5 +1,8 @@
 package com.aviv.rebuy;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,21 +20,26 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.aviv.rebuy.Model.Model;
-import com.aviv.rebuy.Model.Product;
 import com.aviv.rebuy.Model.User;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import static android.content.ContentValues.TAG;
+import java.util.List;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RegisterUserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterUserFragment extends Fragment {
+public class RegisterUserFragment extends Fragment implements EasyPermissions.PermissionCallbacks{
      FirebaseAuth fAuth=FirebaseAuth.getInstance();
     EditText fullName;
     EditText email;
@@ -41,6 +49,9 @@ public class RegisterUserFragment extends Fragment {
     Button regBtn;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     ProgressBar pb;
+    double longitude = 0;
+    double latitude = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +66,7 @@ public class RegisterUserFragment extends Fragment {
         pb=view.findViewById(R.id.regFrag_progressBar);
         phone=view.findViewById(R.id.reg_inputPhone);
 
-
+        setupLocationRequest();
 
         regBtn.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -111,6 +122,8 @@ public class RegisterUserFragment extends Fragment {
                     user.setId(mail);
                     user.setName(name);
                     user.setPhoneNumber(phoneNum);
+                    user.setLongitude(longitude);
+                    user.setLatitude(latitude);
                     Model.instance.addUser(user, new Model.AddUserListener() {
                         @Override
                         public void onComplete() {
@@ -136,9 +149,53 @@ public class RegisterUserFragment extends Fragment {
         return view;
     }
 
+    private void setupLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(20 * 1000);
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_NETWORK_STATE};
+        if (EasyPermissions.hasPermissions(getActivity(), perms)) {
+            getUserLocation();
+        } else {
+            EasyPermissions.requestPermissions(getActivity(), "We need to access to your location", 123, perms);
+        }
+    }
 
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        getUserLocation();
+    }
 
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        // Add a dialog message here if you want
+    }
 
-
-
+    @SuppressLint("MissingPermission")
+    private void getUserLocation() {
+        //Get the location
+        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(getActivity());
+        client.getLastLocation().addOnSuccessListener(getActivity(), location -> {
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+        });
+        if (latitude == 0 && longitude == 0) {
+            new LocationCallback() {
+                @Override
+                public void onLocationResult(@NonNull LocationResult locationResult) {
+                    super.onLocationResult(locationResult);
+                    for (Location location : locationResult.getLocations()) {
+                        if (location != null) {
+                            latitude = location.getAltitude();
+                            longitude = location.getLongitude();
+                        }
+                    }
+                }
+            };
+        }
+    }
 }
