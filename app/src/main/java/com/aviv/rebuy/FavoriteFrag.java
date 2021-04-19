@@ -70,9 +70,8 @@ public class FavoriteFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
-        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
-        navBar.setVisibility(View.VISIBLE);
-
+//        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
+//        navBar.setVisibility(View.VISIBLE);
         listView = view.findViewById(R.id.favList);
 
         data.add("yuval");
@@ -112,7 +111,7 @@ class FavAdapter extends ArrayAdapter<Product> {
         ImageView image = (ImageView) convertView.findViewById(R.id.favImage);
 
         ImageButton favRemove  = (ImageButton)convertView.findViewById(R.id.favRemove);
-        ImageButton infoButton  = (ImageButton)convertView.findViewById(R.id.infoButton);
+//        ImageButton infoButton  = (ImageButton)convertView.findViewById(R.id.infoButton);
 
         favRemove.setOnClickListener(v -> {
             FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).collection("favorites").document(product.getId()).delete();
@@ -120,18 +119,18 @@ class FavAdapter extends ArrayAdapter<Product> {
             notifyDataSetChanged();
         });
 
-        infoButton.setOnClickListener(v -> {
-            FeedViewModel viewModel = new FeedViewModel();
-            viewModel.getList().getValue().forEach(item->{
-                if(item.getId().equals(product.getId())){
-                    // TODO: 4/8/21 need to fix it getting -  does not have a NavController set
+//        infoButton.setOnClickListener(v -> {
+//            FeedViewModel viewModel = new FeedViewModel();
+//            viewModel.getList().getValue().forEach(item->{
+//                if(item.getId().equals(product.getId())){
+//                    // TODO: 4/8/21 need to fix it getting -  does not have a NavController set
 //                     FeedFragmentDirections.ActionFeedFragmentToDetailsFragment action = FeedFragmentDirections.actionFeedFragmentToDetailsFragment(viewModel.getList().getValue().indexOf(item));
 //                     Navigation.findNavController(view).navigate(action);
-                    return;
-                }
-            });
-
-        });
+//                    return;
+//                }
+//            });
+//
+//        });
 
         // Populate the data into the template view using the data object
         name.setText(product.getId());

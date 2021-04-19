@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.aviv.rebuy.Model.ModelFirebase;
 import com.aviv.rebuy.Model.Product;
 import com.aviv.rebuy.Model.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class UserProfileFragment extends Fragment {
     UserViewModel viewModel;
 
     private TextView user_name,user_email,user_phone;
+    private ImageView user_img;
     private ProgressBar pb;
     private RelativeLayout rellay1,rellay2;
 
@@ -49,6 +51,7 @@ public class UserProfileFragment extends Fragment {
         user_name = v.findViewById(R.id.user_name);
         user_email = v.findViewById(R.id.user_email);
         user_phone = v.findViewById(R.id.user_phone);
+        user_img = v.findViewById(R.id.user_img);
 
         viewModel.getUser ( new UserViewModel.GetUserListener() {
             @Override
@@ -56,6 +59,12 @@ public class UserProfileFragment extends Fragment {
                 user_name.setText((user!=null)? user.getName():"User_Name");
                 user_email.setText((user!=null)? user.getId():"User_Email");
                 user_phone.setText((user!=null)? user.getPhoneNumber():"User_Phone");
+                if(user.getImageUrl()!=null) {
+                    Picasso.get().load(user.getImageUrl()).into(user_img);
+                    user_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    user_img.setClipToOutline(true);
+                }
+
                 pb.setVisibility(View.INVISIBLE);
                 rellay1.setAlpha(1);
                 rellay2.setAlpha(1);

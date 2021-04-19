@@ -48,6 +48,7 @@ public class UploadFragment extends Fragment  {
     Button upload_btn;
     ImageView avatarImageView;
     Spinner spinner;
+
     public UploadFragment() {
         // Required empty public constructor
     }
