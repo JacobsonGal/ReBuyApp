@@ -40,10 +40,9 @@ public class LoginFragment extends Fragment {
         TextView register=view.findViewById(R.id.loginfrag_register);
         final EditText usernameEditText = view.findViewById(R.id.feedFrag_inputSearch);
         final EditText passwordEditText = view.findViewById(R.id.reg_inputPassword);
-
         final Button loginButton = view.findViewById(R.id.regFrag_reg_btn);
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
-        navBar.setVisibility(View.INVISIBLE);
+        navBar.setVisibility(View.GONE);
         forgotPassword=view.findViewById(R.id.loginFrag_forgotPassword);
       register.setOnClickListener(new View.OnClickListener() {
           @Override

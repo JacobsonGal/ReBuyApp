@@ -83,7 +83,8 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
     public void addUsersMarkers(List<User> users, GoogleMap googleMap) {
         for (User user : users) {
             LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(location));
+            String userName=user.getName();
+            googleMap.addMarker(new MarkerOptions().position(location).title(userName));
         }
     }
 
@@ -93,7 +94,7 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
             // Add a marker in colman and move the camera
             Model.instance.modelFirebase.getAllUsers(list -> addUsersMarkers(list, googleMap));
             LatLng colman = new LatLng(31.969942746673553, 34.77286230673707);
-            googleMap.addMarker(new MarkerOptions().position(colman).title("Marker in COLMAN"));
+            googleMap.addMarker(new MarkerOptions().position(colman).title("COLMAN"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(colman, 18));
             googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             googleMap.setTrafficEnabled(true);
