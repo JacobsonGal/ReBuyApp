@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.aviv.rebuy.MainActivity">
 
     <View
         android:id="@+id/topBarUpload"
@@ -41,15 +42,15 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="373dp"
-        android:layout_height="575dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topBarUpload"
-        app:layout_constraintVertical_bias="0.19">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        app:layout_constraintBottom_toBottomOf="@id/topBarUpload"
+        app:layout_constraintEnd_toEndOf="@id/topBarUpload"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="@id/topBarUpload"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <EditText
             android:id="@+id/upload_title"
@@ -81,7 +82,7 @@
             android:padding="16dp"
             app:layout_constraintBottom_toTopOf="@+id/upload_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.441"
+            app:layout_constraintHorizontal_bias="0.419"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
@@ -90,7 +91,7 @@
             android:layout_width="130dp"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="48dp"
             android:background="@drawable/round_border"
             android:drawableStart="@drawable/ic_rebuyapple"
             android:drawablePadding="16dp"
@@ -105,9 +106,10 @@
             android:id="@+id/spinner"
             android:layout_width="130dp"
             android:layout_height="56dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="28dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/round_border"
+            android:drawableStart="@drawable/ic_rebuyapple"
             android:spinnerMode="dropdown"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upload_title" />
@@ -147,5 +149,4 @@
             app:srcCompat="@android:drawable/ic_menu_edit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

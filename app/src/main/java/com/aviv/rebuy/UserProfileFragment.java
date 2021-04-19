@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aviv.rebuy.Model.ModelFirebase;
@@ -26,6 +28,9 @@ public class UserProfileFragment extends Fragment {
     UserViewModel viewModel;
 
     private TextView user_name,user_email,user_phone;
+    private ProgressBar pb;
+    private RelativeLayout rellay1,rellay2;
+
 
     public UserProfileFragment() {
     }
@@ -35,7 +40,12 @@ public class UserProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_profile, container, false);
         viewModel = new ViewModelProvider(this).get(UserViewModel.class);
-
+        pb = v.findViewById(R.id.feed_progress);
+        pb.setVisibility(View.VISIBLE);
+        rellay1= v.findViewById(R.id.rellay1);
+        rellay2= v.findViewById(R.id.rellay2);
+        rellay1.setAlpha((float) 0.4);
+        rellay2.setAlpha((float) 0.4);
         user_name = v.findViewById(R.id.user_name);
         user_email = v.findViewById(R.id.user_email);
         user_phone = v.findViewById(R.id.user_phone);
@@ -46,6 +56,9 @@ public class UserProfileFragment extends Fragment {
                 user_name.setText((user!=null)? user.getName():"User_Name");
                 user_email.setText((user!=null)? user.getId():"User_Email");
                 user_phone.setText((user!=null)? user.getPhoneNumber():"User_Phone");
+                pb.setVisibility(View.INVISIBLE);
+                rellay1.setAlpha(1);
+                rellay2.setAlpha(1);
             }
         });
         return v;
