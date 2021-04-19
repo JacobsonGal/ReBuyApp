@@ -99,7 +99,13 @@ public class Details_Fragment extends Fragment {
                 Navigation.findNavController(v).navigate(toEditUpload);
             }
         });
-
+    delbtn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        viewModel.getList().getValue().get(productId).setDeleted(true);
+        Navigation.findNavController(v).navigate(R.id.action_details_Fragment_to_feedFragment);
+    }
+});
       
         addbtn.setOnClickListener(event -> {
             addbtn.setVisibility(View.INVISIBLE);

@@ -153,6 +153,7 @@ public class FeedFragment extends Fragment {
 
         public ListViewHolder(View itemView) {
             super(itemView);
+
             itemText = (TextView) itemView.findViewById(R.id.textView4);
             itemImage = (ImageView) itemView.findViewById(R.id.itemImage);
             descText = (TextView) itemView.findViewById(R.id.description_textView);
@@ -164,10 +165,18 @@ public class FeedFragment extends Fragment {
             });
         }
         public void bindView(int position){
-            itemText.setText(viewModel.getList().getValue().get(position).getName());
-            descText.setText(viewModel.getList().getValue().get(position).getDescription());
-            Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
-        this.position=position;
+            if (!viewModel.getList().getValue().get(position).getDeleted()) {
+                itemText.setText(viewModel.getList().getValue().get(position).getName());
+                descText.setText(viewModel.getList().getValue().get(position).getDescription());
+                Picasso.get().load(viewModel.getList().getValue().get(position).getImageUrl()).into(itemImage);
+                this.position = position;
+            }
+            else{
+                itemText.setVisibility(View.GONE);
+                itemImage.setVisibility(View.GONE);
+                descText.setVisibility(View.GONE);
+
+            }
         }
 
 
@@ -216,6 +225,7 @@ public class FeedFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
             ((ListViewHolder) holder).bindView(position);
         }
 
