@@ -40,17 +40,6 @@
         app:layout_constraintTop_toTopOf="@+id/topBarUpload" />
 
 
-    <ImageView
-        android:id="@+id/feedFrag_logout"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_message"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="373dp"
         android:layout_height="575dp"
@@ -114,9 +103,9 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="122dp"
+            android:layout_width="130dp"
             android:layout_height="56dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/round_border"
             android:spinnerMode="dropdown"

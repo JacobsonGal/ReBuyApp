@@ -52,6 +52,7 @@ public class Edit_Upload_fragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(FeedViewModel.class);
         int productId = Details_FragmentArgs.fromBundle(getArguments()).getProductId();
         View v= inflater.inflate(R.layout.fragment_edit__upload, container, false);
+
         title = v.findViewById(R.id.upload_title_edit);
         title.setText(viewModel.getList().getValue().get(productId).getName());
         description = v.findViewById(R.id.upload_inputDescription);

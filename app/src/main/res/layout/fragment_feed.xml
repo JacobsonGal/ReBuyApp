@@ -41,20 +41,10 @@
         app:layout_constraintStart_toStartOf="@+id/topBar"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/feedFrag_logout"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_message"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <SearchView
         android:id="@+id/feedFrag_inputSearch"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -74,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Suggestion"
+        android:text="Products"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold"
