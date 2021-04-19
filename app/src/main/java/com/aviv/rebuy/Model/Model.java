@@ -71,6 +71,9 @@ public class Model {
     public interface GetProductListener {
         void onComplete(Product product);
     }
+    public interface GetUserListener {
+        void onComplete(User user);
+    }
     public void getProduct(String id, GetProductListener listener) {
         modelFirebase.getProduct(id, listener);
     }
@@ -127,6 +130,4 @@ public class Model {
         });
     }
 
-
-
-    }
+}

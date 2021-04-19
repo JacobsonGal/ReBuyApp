@@ -25,7 +25,7 @@ public class ModelFirebase {
 
 //Product
 
-    interface GetAllProductsListener{
+    public interface GetAllProductsListener{
         void onComplete(List<Product> list);
     }
 
@@ -47,6 +47,21 @@ public class ModelFirebase {
                 }
                 listener.onComplete(data);
             }
+        });
+    }
+
+    public void getAllProducts(final GetAllProductsListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("products").get().addOnCompleteListener(task -> {
+            List<Product> data = new ArrayList<>();
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot doc : task.getResult()) {
+                    Product product = new Product();
+                    product.fromMap(doc.getData());
+                    data.add(product);
+                }
+            }
+            listener.onComplete(data);
         });
     }
 
@@ -90,6 +105,26 @@ public class ModelFirebase {
             }
         });
     }
+
+    public void getUser(String id, final Model.GetUserListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                User user = null;
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc != null) {
+                        user = new User();
+                        Log.d("user id",user.getId());
+                        user.fromMap(task.getResult().getData());
+                    }
+                }
+                listener.onComplete(user);
+            }
+        });
+    }
+
 
     public void delete(Product product, final Model.DeleteListener listener) {
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();

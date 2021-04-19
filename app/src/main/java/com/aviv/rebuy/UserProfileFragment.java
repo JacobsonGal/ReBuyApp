@@ -70,6 +70,7 @@ public class UserProfileFragment extends Fragment {
                 rellay2.setAlpha(1);
             }
         });
+
         return v;
     }
 }

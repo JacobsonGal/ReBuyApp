@@ -1,5 +1,7 @@
 package com.aviv.rebuy;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,15 +11,25 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.aviv.rebuy.Model.Model;
+import com.aviv.rebuy.Model.ModelFirebase;
+import com.aviv.rebuy.Model.Product;
 import com.aviv.rebuy.Model.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
@@ -80,11 +92,40 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
     }
 
-    public void addUsersMarkers(List<User> users, GoogleMap googleMap) {
-        for (User user : users) {
-            LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
-            String userName=user.getName();
-            googleMap.addMarker(new MarkerOptions().position(location).title(userName));
+//    public void addUsersMarkers(List<User> users, GoogleMap googleMap) {
+//        for (User user : users) {
+//            LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
+//            String userName=user.getName();
+//            googleMap.addMarker(new MarkerOptions().position(location).title(userName));
+//        }
+//    }
+    public void addProductsMarkers(List<Product> products, GoogleMap googleMap) {
+        for (Product product : products) {
+
+            Model.instance.modelFirebase.getUser ( product.getOwnerId(),new Model.GetUserListener() {
+                @Override
+                public void onComplete(User user) {
+                    LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
+                    String userName=user.getName();
+                    Bitmap image=null;
+                    if(product.getImageUrl()!=null) {
+                        try {
+                            URL url = new URL(product.getImageUrl());
+                             image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                        }
+                        catch(IOException e) {
+                            System.out.println(e);
+                        }
+                    }
+                    MarkerOptions mo=new MarkerOptions().position(location);
+                    mo.title(product.getName());
+                    if (image!=null) mo.icon(BitmapDescriptorFactory.fromBitmap(image));
+
+                    googleMap.addMarker(mo);
+                }
+            });
+
+
         }
     }
 
@@ -92,7 +133,8 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         if (googleMap != null) {
             // Add a marker in colman and move the camera
-            Model.instance.modelFirebase.getAllUsers(list -> addUsersMarkers(list, googleMap));
+//            Model.instance.modelFirebase.getAllUsers(list -> addUsersMarkers(list, googleMap));
+            Model.instance.modelFirebase.getAllProducts(list -> addProductsMarkers(list, googleMap));
             LatLng colman = new LatLng(31.969942746673553, 34.77286230673707);
             googleMap.addMarker(new MarkerOptions().position(colman).title("COLMAN"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(colman, 18));
