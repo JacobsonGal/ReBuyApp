@@ -48,6 +48,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:9.8.0'
+    implementation 'com.google.android.gms:play-services-location:9.8.0'
+    implementation "com.google.android.gms:play-services-location:15.0.1"
+    implementation 'pub.devrel:easypermissions:2.0.1'
+
     implementation 'com.google.firebase:firebase-firestore:21.4.3'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.firebase:firebase-auth:19.2.0'

@@ -91,6 +91,7 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         if (googleMap != null) {
             // Add a marker in colman and move the camera
+            Model.instance.modelFirebase.getAllUsers(list -> addUsersMarkers(list, googleMap));
             LatLng colman = new LatLng(31.969942746673553, 34.77286230673707);
             googleMap.addMarker(new MarkerOptions().position(colman).title("Marker in COLMAN"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(colman, 18));
