@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginTop="24dp"
-        android:text="New Product"
+        android:text="Upload"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -70,7 +70,7 @@
 
         <EditText
             android:id="@+id/upload_inputDescription"
-            android:layout_width="290dp"
+            android:layout_width="330dp"
             android:layout_height="70dp"
             android:layout_marginTop="8dp"
             android:drawableStart="@drawable/ic_rebuyapple"
@@ -81,16 +81,16 @@
             android:padding="16dp"
             app:layout_constraintBottom_toTopOf="@+id/upload_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.588"
+            app:layout_constraintHorizontal_bias="0.441"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
         <EditText
             android:id="@+id/upload_inputPrice"
-            android:layout_width="122dp"
-            android:layout_height="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="56dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/round_border"
             android:drawableStart="@drawable/ic_rebuyapple"
             android:drawablePadding="16dp"
@@ -105,7 +105,7 @@
             android:id="@+id/spinner"
             android:layout_width="130dp"
             android:layout_height="56dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/round_border"
             android:spinnerMode="dropdown"

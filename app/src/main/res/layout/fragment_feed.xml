@@ -41,36 +41,36 @@
         app:layout_constraintStart_toStartOf="@+id/topBar"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SearchView
-        android:id="@+id/feedFrag_inputSearch"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/round_border"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:drawablePadding="16dp"
-        android:ems="10"
-        android:hint="Search for item .."
-        android:inputType="text"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topBar" />
+<!--    <SearchView-->
+<!--        android:id="@+id/feedFrag_inputSearch"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:background="@drawable/round_border"-->
+<!--        android:drawableStart="@android:drawable/ic_menu_search"-->
+<!--        android:drawablePadding="16dp"-->
+<!--        android:ems="10"-->
+<!--        android:hint="Search for item .."-->
+<!--        android:inputType="text"-->
+<!--        android:padding="16dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/topBar" />-->
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Products"
+        android:text="Suggestion"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feedFrag_inputSearch" />
+        app:layout_constraintTop_toBottomOf="@+id/topBar" />
 
     <ProgressBar
         android:id="@+id/feed_progress"
@@ -97,7 +97,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swiperefresh"
         android:layout_width="405dp"
-        android:layout_height="423dp"
+        android:layout_height="550dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

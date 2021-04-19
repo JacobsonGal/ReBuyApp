@@ -47,7 +47,7 @@ public class UploadFragment extends Fragment  {
     EditText price;
     Button upload_btn;
     ImageView avatarImageView;
-Spinner spinner;
+    Spinner spinner;
     public UploadFragment() {
         // Required empty public constructor
     }
@@ -113,13 +113,12 @@ Spinner spinner;
 
     private void saveProduct() {
         final Product product = new Product();
-
         product.setName(title.getText().toString());
         product.setDescription(description.getText().toString());
         product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         product.setPrice(Double.parseDouble(price.getText().toString()));
-         product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
-         product.setCondition(spinner.getSelectedItem().toString());
+        product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
+        product.setCondition(spinner.getSelectedItem().toString());
         BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
         Log.d("BITAG",drawable.toString());
         Bitmap bitmap = drawable.getBitmap();

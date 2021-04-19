@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.aviv.rebuy.Model.Model;
+import com.aviv.rebuy.Model.ModelFirebase;
 import com.aviv.rebuy.Model.Product;
 import com.aviv.rebuy.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,10 +24,11 @@ public class UserViewModel extends ViewModel {
     public User user=null;
 
     public UserViewModel(){
-        getUser();
     }
 
-    public void getUser() {
+    public interface GetUserListener{ void onComplete(User user);}
+
+    public void getUser(final GetUserListener listener) {
         FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -37,6 +39,7 @@ public class UserViewModel extends ViewModel {
                         user.fromMap(task.getResult().getData());
                     }
                 }
+                listener.onComplete(user);
             }
         });
     }

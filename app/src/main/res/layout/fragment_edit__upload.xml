@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/round_bg"
-            android:text="UPLOAD"
+            android:text="Update"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
