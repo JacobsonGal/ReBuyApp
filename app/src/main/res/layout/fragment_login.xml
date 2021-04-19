@@ -148,23 +148,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
-
-        <ImageView
-            android:id="@+id/loginFacebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/facebook" />
-
-        <ImageView
-            android:id="@+id/googleLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/google" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView5"/>
 
     <TextView
         android:id="@+id/loginfrag_register"

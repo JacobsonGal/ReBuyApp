@@ -203,13 +203,13 @@ public class FeedFragment extends Fragment {
             ListViewHolder holder = new ListViewHolder(view);
             holder.listener = listener;
 
-            Timer t = new Timer();
-            t.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    pb.setVisibility(View.INVISIBLE);
-                }
-            }, 2500);
+           Timer t = new Timer();
+           t.schedule(new TimerTask() {
+               @Override
+               public void run() {
+                   pb.setVisibility(View.INVISIBLE);
+               }
+          }, 2500);
 
             return holder;
         }
