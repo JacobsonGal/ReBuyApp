@@ -133,6 +133,7 @@ public class ModelFirebase {
 //User
 
     public interface GetAllUsersListener{ void onComplete(List<User> list);}
+
     public void getAllUsers(final GetAllUsersListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").get().addOnCompleteListener(task -> {

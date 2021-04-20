@@ -6,11 +6,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.aviv.rebuy.Model.ModelFirebase;
 import com.aviv.rebuy.Model.Product;
 import com.aviv.rebuy.Model.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ public class UserProfileFragment extends Fragment {
     private ImageView user_img;
     private ProgressBar pb;
     private RelativeLayout rellay1,rellay2;
-
+    private Button logout_btn;
 
     public UserProfileFragment() {
     }
@@ -46,6 +49,7 @@ public class UserProfileFragment extends Fragment {
         pb.setVisibility(View.VISIBLE);
         rellay1= v.findViewById(R.id.rellay1);
         rellay2= v.findViewById(R.id.rellay2);
+        logout_btn=v.findViewById((R.id.profile_frag_logout));
         rellay1.setAlpha((float) 0.4);
         rellay2.setAlpha((float) 0.4);
         user_name = v.findViewById(R.id.user_name);
@@ -68,6 +72,15 @@ public class UserProfileFragment extends Fragment {
                 pb.setVisibility(View.INVISIBLE);
                 rellay1.setAlpha(1);
                 rellay2.setAlpha(1);
+            }
+        });
+
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Navigation.findNavController(logout_btn).navigate(R.id.action_profileFragment_to_loginFragment);
+
             }
         });
         return v;

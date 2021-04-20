@@ -17,7 +17,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class  MainFragment extends Fragment {
-    BottomNavigationView bottom;
 
     public MainFragment() {
         // Required empty public constructor
@@ -38,7 +37,8 @@ public class  MainFragment extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_login);
             }
         });
-
+//        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
+//        navBar.setVisibility(View.GONE);
         return view;
     }
 }
