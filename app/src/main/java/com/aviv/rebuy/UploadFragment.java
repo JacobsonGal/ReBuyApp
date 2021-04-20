@@ -116,7 +116,8 @@ public class UploadFragment extends Fragment  {
         final Product product = new Product();
         product.setName(title.getText().toString());
         product.setDescription(description.getText().toString());
-        product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         product.setPrice(Double.parseDouble(price.getText().toString()));
         product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
         product.setCondition(spinner.getSelectedItem().toString());

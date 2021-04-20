@@ -40,14 +40,16 @@ public class User {
     }
 
     public void fromMap(Map<String, Object> map) {
-        this.id = (String) map.get("id");
-        this.name = (String) map.get("name");
-        this.phoneNumber = (String) map.get("phone");
-        this.imageUrl = (String) map.get("imageUrl");
-        Timestamp ts = (Timestamp) map.get("lastUpdated");
-        this.lastUpdated = ts.getSeconds();
-        this.latitude = Double.valueOf(map.get("latitude").toString());
-        this.longitude = Double.valueOf(map.get("longitude").toString());
+        if(map!=null){
+            this.id = (String) map.get("id");
+            this.name = (String) map.get("name");
+            this.phoneNumber = (String) map.get("phone");
+            this.imageUrl = (String) map.get("imageUrl");
+            Timestamp ts = (Timestamp) map.get("lastUpdated");
+            this.lastUpdated = ts.getSeconds();
+            this.latitude = Double.valueOf(map.get("latitude").toString());
+            this.longitude = Double.valueOf(map.get("longitude").toString());
+        }
     }
 
     public List<Product> getFavorites() {

@@ -1,13 +1,20 @@
 package com.aviv.rebuy;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,39 +34,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MapFrag#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class MapFrag extends Fragment implements OnMapReadyCallback {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class MapFrag extends Fragment implements OnMapReadyCallback {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public MapFrag() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MapFrag.
-     */
-    // TODO: Rename and change types and number of parameters
+    public MapFrag() {}
     public static MapFrag newInstance(String param1, String param2) {
         MapFrag fragment = new MapFrag();
         Bundle args = new Bundle();
@@ -68,7 +58,6 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,69 +66,88 @@ public class MapFrag extends Fragment implements OnMapReadyCallback {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
-//    public void addUsersMarkers(List<User> users, GoogleMap googleMap) {
-//        for (User user : users) {
-//            LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
-//            String userName=user.getName();
-//            googleMap.addMarker(new MarkerOptions().position(location).title(userName));
-//        }
-//    }
+    public void addUsersMarkers(List<User> users, GoogleMap googleMap) {
+        for (User user : users) {
+            LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
+            String userName=user.getName();
+            googleMap.addMarker(new MarkerOptions().position(location).title(userName).icon(bitmapDescriptorFromVector(getActivity(), R.drawable.logo)));
+        }
+    }
     public void addProductsMarkers(List<Product> products, GoogleMap googleMap) {
         for (Product product : products) {
-
-            Model.instance.modelFirebase.getUser ( product.getOwnerId(),new Model.GetUserListener() {
+            Log.d("*******************Product**************** : ",product.getName().toString()+" - "+product.getOwnerId().toString());
+            Model.instance.modelFirebase.getUser(product.getOwnerId(),new Model.GetUserListener() {
                 @Override
                 public void onComplete(User user) {
-                    LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
-                    String userName=user.getName();
-                    Bitmap image=null;
-                    if(product.getImageUrl()!=null) {
-                        try {
-                            URL url = new URL(product.getImageUrl());
-                             image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                        }
-                        catch(IOException e) {
-                            System.out.println(e);
+                    if(user!=null) {
+                        Log.d("*******************USER**************** : ",user.getId().toString());
+                        LatLng location = new LatLng(user.getLatitude(), user.getLongitude());
+                        Log.d("*******************location**************** : ",location.toString());
+                        String userName = user.getName();
+                        MarkerOptions mo = new MarkerOptions().position(location).title(product.getName());
+                        final Bitmap[] image = {null};
+                        if (product.getImageUrl() != null) Picasso.get().load(product.getImageUrl()).into(new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                googleMap.addMarker(new MarkerOptions().position(location).title(product.getName()).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                googleMap.addMarker(new MarkerOptions().position(location).title(product.getName()));
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                            }
+                        });
+                        else{
+                            googleMap.addMarker(new MarkerOptions().position(location).title(product.getName()));
                         }
                     }
-                    MarkerOptions mo=new MarkerOptions().position(location);
-                    mo.title(product.getName());
-                    if (image!=null) mo.icon(BitmapDescriptorFactory.fromBitmap(image));
-
-                    googleMap.addMarker(mo);
                 }
             });
 
-
         }
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
+//        Drawable background = ContextCompat.getDrawable(context, R.drawable.ic_rebuyapple);
+//        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorDrawableResourceId);
+        vectorDrawable.setBounds(10, 5, vectorDrawable.getIntrinsicWidth() + 1, vectorDrawable.getIntrinsicHeight() + 1);
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+//        background.draw(canvas);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         if (googleMap != null) {
-            // Add a marker in colman and move the camera
-//            Model.instance.modelFirebase.getAllUsers(list -> addUsersMarkers(list, googleMap));
-            Model.instance.modelFirebase.getAllProducts(list -> addProductsMarkers(list, googleMap));
+            Model.instance.modelFirebase.getAllUsers(list -> addUsersMarkers(list, googleMap));
+//            Model.instance.modelFirebase.getAllProducts(list -> addProductsMarkers(list, googleMap));
             LatLng colman = new LatLng(31.969942746673553, 34.77286230673707);
             googleMap.addMarker(new MarkerOptions().position(colman).title("COLMAN"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(colman, 18));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(colman, 13));
             googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             googleMap.setTrafficEnabled(true);
+            googleMap.setBuildingsEnabled(true);
+            googleMap.setIndoorEnabled(true);
         }
     }
 }

@@ -4,11 +4,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 import androidx.annotation.NonNull;
+
+import com.aviv.rebuy.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -107,8 +110,7 @@ public class ModelFirebase {
     }
 
     public void getUser(String id, final Model.GetUserListener listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        FirebaseFirestore.getInstance().collection("users").document(id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 User user = null;
@@ -116,8 +118,7 @@ public class ModelFirebase {
                     DocumentSnapshot doc = task.getResult();
                     if (doc != null) {
                         user = new User();
-                        Log.d("user id",user.getId());
-                        user.fromMap(task.getResult().getData());
+                        if(user!=null) user.fromMap(task.getResult().getData());
                     }
                 }
                 listener.onComplete(user);
