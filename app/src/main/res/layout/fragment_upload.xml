@@ -44,12 +44,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="@id/topBarUpload"
         app:layout_constraintEnd_toEndOf="@id/topBarUpload"
         app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="@id/topBarUpload"
-        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBarUpload"
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
@@ -134,11 +134,12 @@
             android:id="@+id/upload_imageView"
             android:layout_width="155dp"
             android:layout_height="137dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:srcCompat="@drawable/ic_rebuyapple" />
+
 
         <ImageButton
             android:id="@+id/upload_imageButton"
@@ -146,7 +147,7 @@
             android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="@+id/upload_imageView"
             app:layout_constraintStart_toEndOf="@+id/upload_imageView"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
+            app:srcCompat="@drawable/ic_baseline_image_search_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>
