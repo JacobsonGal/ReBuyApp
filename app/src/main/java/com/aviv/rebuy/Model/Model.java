@@ -101,9 +101,9 @@ public class Model {
 
     interface DeleteListener extends AddProductListener { }
 
-    public void deleteStudent(Product product, DeleteListener listener) {
-        modelFirebase.delete(product, listener);
-    }
+//    public void deleteStudent(Product product, DeleteListener listener) {
+//        modelFirebase.delete(product, listener);
+//    }
 
 
 

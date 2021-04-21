@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aviv.rebuy.Model.Model;
+import com.aviv.rebuy.Model.ModelFirebase;
 import com.aviv.rebuy.Model.Product;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -103,6 +104,8 @@ public class Details_Fragment extends Fragment {
     @Override
     public void onClick(View v) {
         viewModel.getList().getValue().get(productId).setDeleted(true);
+        ModelFirebase modelFirebase=new ModelFirebase();
+        modelFirebase.delete(viewModel.getList().getValue().get(productId).getId());
         Navigation.findNavController(v).navigate(R.id.action_details_Fragment_to_feedFragment);
     }
 });

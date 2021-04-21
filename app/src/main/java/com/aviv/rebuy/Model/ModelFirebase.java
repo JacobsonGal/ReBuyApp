@@ -91,10 +91,23 @@ public class ModelFirebase {
         });
     }
 
-    public void delete(Product product, final Model.DeleteListener listener) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("students").document(student.getId())
-//                .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+    public void delete(String id) {
+//        FirebaseFirestore.getInstance().collection("products").document(String.valueOf(id)).delete();
+        FirebaseFirestore.getInstance().collection("products").document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("TAG", "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("TAG", "Error deleting document", e);
+                    }
+                });
+//        .addOnCompleteListener(new OnCompleteListener<Void>() {
 //            @Override
 //            public void onComplete(@NonNull Task<Void> task) {
 //                listener.onComplete();
