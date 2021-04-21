@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static com.aviv.rebuy.MyApplication.context;
 
 
 public class UploadFragment extends Fragment  {
@@ -65,6 +67,7 @@ public class UploadFragment extends Fragment  {
         price = v.findViewById(R.id.upload_inputPrice);
         upload_btn = v.findViewById(R.id.upload_btn);
         avatarImageView = v.findViewById(R.id.upload_imageView);
+        avatarImageView.setTag("");
        // avatarImageView.setImageBitmap();
         editImage = v.findViewById(R.id.upload_imageButton);
 
@@ -113,33 +116,64 @@ public class UploadFragment extends Fragment  {
     }
 
     private void saveProduct() {
-        final Product product = new Product();
-        product.setName(title.getText().toString());
-        product.setDescription(description.getText().toString());
-        product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        product.setPrice(Double.parseDouble(price.getText().toString()));
-        product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
-        product.setCondition(spinner.getSelectedItem().toString());
-        BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
-        Log.d("BITAG",drawable.toString());
-        Bitmap bitmap = drawable.getBitmap();
+        String imgName=(String) avatarImageView.getTag();
+        String t=title.getText().toString();
+        String d=description.getText().toString();
+        String p=price.getText().toString();
 
-        Model.instance.uploadImage(bitmap, product.getName(), new Model.UploadImageListener() {
-            @Override
-            public void onComplete(String url) {
-                if (url == null){
-                    displayFailedError();
-                }else{
-                    product.setImageUrl(url);
-                    Model.instance.addProduct(product, new Model.AddProductListener() {
-                        @Override
-                        public void onComplete() {
-                            Navigation.findNavController(upload_btn).navigate(R.id.action_global_feedFragment);
-                        }
-                    });
+        if(t.equals("") || d.equals("") || p.equals("")|| imgName.equals(""))
+        {
+            StringBuilder message=new StringBuilder();
+            if(t.equals(""))
+                message.append("Title is empty!\n");
+            if( d.equals(""))
+                message.append("Description is empty!\n");
+            if(p.equals(""))
+                message.append("Price is empty!\n");
+            if(imgName.equals(""))
+                message.append("No Image selected!\n");
+            message.append("\nPlease fill the missing field`s !\n");
+            new AlertDialog.Builder(getContext())
+                .setTitle("DATA MISSING !")
+                .setMessage("You did not fill all the field's !\n\n" + message.toString())
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+        }
+        else{
+            final Product product = new Product();
+            product.setName(title.getText().toString());
+            product.setDescription(description.getText().toString());
+            product.setOwnerId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            product.setPrice(Double.parseDouble(price.getText().toString()));
+            product.setId((product.getName()+product.getDescription()).replaceAll("\\s+",""));
+            product.setCondition(spinner.getSelectedItem().toString());
+            BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
+            Log.d("BITAG",drawable.toString());
+            Bitmap bitmap = drawable.getBitmap();
+
+            Model.instance.uploadImage(bitmap, product.getName(), new Model.UploadImageListener() {
+                @Override
+                public void onComplete(String url) {
+                    if (url == null){
+                        displayFailedError();
+                    }else{
+                        product.setImageUrl(url);
+                        Model.instance.addProduct(product, new Model.AddProductListener() {
+                            @Override
+                            public void onComplete() {
+                                Navigation.findNavController(upload_btn).navigate(R.id.action_global_feedFragment);
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
+
+        }
 
     }
 
@@ -187,6 +221,7 @@ public class UploadFragment extends Fragment  {
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
                         avatarImageView.setImageBitmap(selectedImage);
+                        avatarImageView.setTag("img");
                     }
                     break;
                 case 1:
@@ -201,6 +236,7 @@ public class UploadFragment extends Fragment  {
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
                                 avatarImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                avatarImageView.setTag("img");
                                 cursor.close();
                             }
                         }
